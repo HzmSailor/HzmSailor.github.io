@@ -6,8 +6,8 @@ title: Zimu Han
 name_pronunciation: ''
 
 # Full name (for SEO)
-first_name: Zimu 
-last_name: Han
+first_name: Alex
+last_name: Johnson
 
 # Pronouns (optional)
 pronouns: he/him
@@ -23,18 +23,18 @@ superuser: true
 highlight_name: true
 
 # Role/position/tagline
-role: Undergraduate Student
+role: Senior AI Research Scientist
 
 # Organizations/Affiliations to display in Biography blox
 organizations:
-  - name: Xi'an Jiaotong University
-    url: https://en.xjtu.edu.cn/
+  - name: Meta AI
+    url: https://ai.meta.com/
 
 # Social network links
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
 profiles:
   - icon: at-symbol
-    url: 'mailto:zimu.han@stu.xjtu.edu.cn'
+    url: 'mailto:alex.johnson@meta.com'
     label: E-mail Me
   - icon: brands/x
     url: https://twitter.com/AlexAIResearch
