@@ -34,11 +34,11 @@ sections:
       title: '📚 My Research'
       subtitle: ''
       text: |-
-        Use this area to speak to your mission. I'm a research scientist in the Moonshot team at DeepMind. I blog about machine learning, deep learning, and moonshots.
-
-        I apply a range of qualitative and quantitative methods to comprehensively investigate the role of science and technology in the economy.
-
-        Please reach out to collaborate 😃
+       My research centers on robotic manipulation currently, driven by the profound potential of autonomous systems to revolutionize industries and enhance daily life. 
+       
+       As an undergraduate research assistant, I am not only focused on developing robust algorithms but also committed to exploring the broad field of intelligent systems—specifically, how advanced AI and control techniques can enable intelligent agents to perform complex tasks in unstructured environments. My ultimate ideal is to contribute to a future where intelligent agents seamlessly collaborate with humans, transforming challenging tasks into automated, efficient processes.
+        
+        Feel free to reach out to collaborate! 😃
     design:
       columns: '1'
   - block: collection

@@ -52,15 +52,15 @@ interests:
   - Reinforcement Learning
   - Imitation Learning
 
-education:
-  - area: BS Artificial Intelligence
-    institution: Xi'an Jiaotong University
-    icon: ""
-    date_start: 2024-09-01
-    date_end: 2028-06-30
-    summary: |
-      GPA: 4.16/4.30.
-      I serve as a general leader of [XJTU AI Learning Group](https://xjtu-ai.github.io).
+# education:
+#   - area: BS Artificial Intelligence
+#     institution: Xi'an Jiaotong University
+#     icon: ""
+#     date_start: 2024-09-01
+#     date_end: 2028-06-30
+#     summary: |
+#       GPA: 4.16/4.30.
+#       I serve as a general leader of [XJTU AI Learning Group](https://xjtu-ai.github.io).
 
   # - area: MS Computer Science
   #   institution: Carnegie Mellon University
@@ -81,22 +81,23 @@ education:
   #     Minored in Mathematics. President of AI Club.
 
 work:
-  - position: Senior AI Research Scientist
-    company_name: Meta AI
-    company_url: 'https://ai.meta.com/'
+  - position: Research Intern
+    company_name: Institution of Artificial Intelligence and Robotics, Xi'an Jiaotong University
+    company_url: 'https://iair.xjtu.edu.cn/#'
     icon: ''
-    date_start: 2020-01-01
+    date_start: 2025-09-10
     date_end: ''
-    summary: |2-
-      Leading research on multimodal AI systems. Contributed to Llama 2 and other open-source models. 50+ citations in 3 years.
-  - position: AI Research Intern
-    company_name: OpenAI
-    company_url: 'https://openai.com/'
-    icon: ''
-    date_start: 2019-06-01
-    date_end: 2019-12-31
     summary: |
-      Worked on GPT-3 scaling. Co-authored paper on prompt engineering.
+      Working on reinforcement learning for intelligent decision.
+
+  - position: Research Intern
+    company_name: Center on Frontiers of Computing Studies, Peking University
+    company_url: 'https://cfcs.pku.edu.cn/english/'
+    icon: ''
+    date_start: 2025-03-15
+    date_end: ''
+    summary: |
+      Working on imitation algorithm for robotic manipulation.
 
 # Skills
 # Add your own SVG icons to `assets/media/icons/`
@@ -107,11 +108,11 @@ skills:
         description: ''
         percent: 95
         icon: code-bracket
-      - name: Machine Learning
+      - name: Deep Learning
         description: ''
         percent: 100
         icon: chart-bar
-      - name: Cloud Computing (AWS/GCP)
+      - name: Linux
         description: ''
         percent: 85
         icon: cloud
@@ -169,4 +170,4 @@ I am an undergraduate student at [Institute of Artificial Intelligence and Robot
 
 I am now a research intern at the [Center on Frontiers of Computing Studies (CFCS)](https://cfcs.pku.edu.cn/english/) at the [School of Computer Science](https://cfcs.pku.edu.cn/english/), [Peking University](https://www.pku.edu.cn/), China, advised by Prof. [Hao Dong](https://zsdonghao.github.io/) and Dr. [Jiyao Zhang](https://jiyao06.github.io). 
 
-My research interests are Robotic Manipulation and Vision-Language-Action Models (VLA).
+Currently, my research interests are Robotic Manipulation and Vision-Language-Action Models (VLA). I also have experience exploring robotic imitation learning and reinforcement learning previously.
