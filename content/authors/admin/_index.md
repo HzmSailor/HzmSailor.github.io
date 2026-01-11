@@ -88,7 +88,7 @@ work:
     date_start: 2025-09-10
     date_end: ''
     summary: |
-      Working on reinforcement learning for intelligent decision.
+      Working on world model for autonomous driving.
 
   - position: Research Intern
     company_name: Center on Frontiers of Computing Studies, Peking University
