@@ -88,7 +88,7 @@ work:
     date_start: 2025-09-10
     date_end: ''
     summary: |
-      Working on reinforcement learning for intelligent decision..
+      Working on reinforcement learning for intelligent decision.
 
   - position: Research Intern
     company_name: Center on Frontiers of Computing Studies, Peking University
@@ -149,21 +149,21 @@ awards:
     awarder: Ministry of Education of the People's Republic of China
     icon: hero/trophy
     summary: |
-      Awarded for groundbreaking work on efficient training of large models.
+      
   - title: Merit Student
     url: https://en.xjtu.edu.cn/
     date: '2025-10-20'
     awarder: Xi'an Jiaotong University
     icon: hero/currency-dollar
     summary: |
-      $500,000 grant for research in ethical AI development.
+      
   - title: Young Pioneer of the New Era
     date: '2025-05-04'
     url: https://bjb.xjtu.edu.cn/index.htm#
     awarder: Qian Xuesen Honor College, Xi'an Jiaotong University
     icon: hero/academic-cap
     summary: |
-      Recognized for contributions to scaling laws in deep learning.
+      
 ---
 
 I am an undergraduate student at [Institute of Artificial Intelligence and Robotics (IAIR)](http://www.aiar.xjtu.edu.cn/#), [Xi'an Jiaotong University](https://en.xjtu.edu.cn/), majoring in Artificial Intelligence. 
