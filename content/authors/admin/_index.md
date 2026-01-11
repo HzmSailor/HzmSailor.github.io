@@ -148,21 +148,21 @@ awards:
     date: '2025-10-20'
     awarder: Ministry of Education of the People's Republic of China
     icon: hero/trophy
-    summary: |
+    summary: ""
       
   - title: Merit Student
     url: https://en.xjtu.edu.cn/
     date: '2025-10-20'
     awarder: Xi'an Jiaotong University
     icon: hero/currency-dollar
-    summary: |
+    summary: ""
       
   - title: Young Pioneer of the New Era
     date: '2025-05-04'
     url: https://bjb.xjtu.edu.cn/index.htm#
     awarder: Qian Xuesen Honor College, Xi'an Jiaotong University
     icon: hero/academic-cap
-    summary: |
+    summary: ""
       
 ---
 
