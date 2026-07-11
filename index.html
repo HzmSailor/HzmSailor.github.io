@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zimu Han</title>
+  <meta name="keywords" content="Zimu Han, Embodied AI, Robotics, Xi'an Jiaotong University, XJTU, PKU, CFCS, VLA, Vision-Language-Action, Imitation Learning, Reinforcement Learning">
+  <meta name="description" content="Personal academic homepage of Zimu Han, working on Embodied AI." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+
+  <!-- ======================================================
+       HEADER
+  ====================================================== -->
+  <header class="site-header">
+    <h1>Zimu Han</h1>
+    <p class="tagline">
+      🎓 Undergraduate Student at Xi'an Jiaotong University
+    </p>
+  </header>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       BIO
+  ====================================================== -->
+  <section class="bio-section" id="about">
+    <div class="bio-avatar">
+      <img src="assets/files/avatar/avatar.png" alt="Zimu Han"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+      <div class="avatar-placeholder" style="display:none;">ZH</div>
+    </div>
+    <div class="bio-text">
+      <p>
+        I am an undergraduate student at <a href="https://www.xjtu.edu.cn/" target="_blank">Institute of Artificial Intelligence and Robotics (IAIR), Xi'an Jiaotong University</a>, majoring in Artificial Intelligence. Currently, I am a research intern at the <a href="https://cfcs.pku.edu.cn/" target="_blank">Center on Frontiers of Computing Studies (CFCS)</a> at <a href="https://www.pku.edu.cn/" target="_blank">Peking University</a>, advised by <a href="https://zsdonghao.github.io/" target="_blank">Prof. Hao Dong</a> and <a href="https://jiyao06.github.io/" target="_blank">Dr. Jiyao Zhang</a>. My research interests are Robotic Manipulation and Vision-Language-Action Models (VLA). I also have experience exploring robotic imitation learning and reinforcement learning.
+      </p>
+
+      <div class="bio-badges">
+        <a href="https://github.com/HzmSailor" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/badge/GitHub-HzmSailor-181717?style=flat&logo=github&logoColor=white" alt="GitHub" />
+        </a>
+        <a href="https://scholar.google.com/citations?user=r-zCeCEAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/badge/Google_Scholar-Zimu_Han-4285F4?style=flat&logo=google-scholar&logoColor=white" alt="Google Scholar" />
+        </a>
+      </div>
+
+      <details style="margin-top:10px;">
+        <summary style="cursor:pointer; font-family:var(--font-mono); font-size:.78rem; color:var(--text-muted); user-select:none;">Detailed Profile (详细个人介绍)</summary>
+        <div style="margin-top:10px; font-size:.93rem; line-height:1.75; color:var(--text-muted);">
+          <p>
+            I am an undergraduate student at Institute of Artificial Intelligence and Robotics (IAIR), Xi'an Jiaotong University, majoring in Artificial Intelligence. Currently, I am a research intern at the Center on Frontiers of Computing Studies (CFCS) at Peking University, advised by Prof. Hao Dong and Dr. Jiyao Zhang. My research interests are Robotic Manipulation and Vision-Language-Action Models (VLA). I also have experience exploring robotic imitation learning and reinforcement learning.
+          </p>
+          <p style="margin-top:8px;">
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Social Links -->
+  <div class="social-links">
+    <a class="social-btn" href="mailto:zimu.han@stu.xjtu.edu.cn">
+      <img src="assets/files/icon/email.png" alt="Email" /> Email
+    </a>
+    <a class="social-btn" href="https://scholar.google.com/citations?user=r-zCeCEAAAAJ&hl=en" target="_blank">
+      <img src="assets/files/icon/google_scholar.png" alt="Scholar" /> Scholar
+    </a>
+    <a class="social-btn" href="https://github.com/HzmSailor" target="_blank">
+      <img src="assets/files/icon/github_s.jpg" alt="GitHub" style="border-radius:50%;" /> GitHub
+    </a>
+  </div>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       NEWS
+  ====================================================== -->
+  <section id="news">
+    <h2 class="section-title">News</h2>
+
+    <div class="news-panel">
+      <ul class="news-list" id="news-list">
+        <li class="news-item">
+          <span class="news-date">06/2026</span>
+          <span class="news-content">🏆 I was awarded a Most Promising Award of Sensetime Scholarship!</span>
+        </li>
+        <li class="news-item">
+          <span class="news-date">06/2026</span>
+          <span class="news-content">🎉 <a href="https://hipolicy.github.io" target="_blank" rel="noopener noreferrer">HiPolicy</a> accepted to ECCV 2026!</span>
+        </li>
+        <li class="news-item">
+          <span class="news-date">10/2025</span>
+          <span class="news-content">🏆 I was awarded a National Scholarship!</span>
+        </li>
+      </ul>
+      <button class="news-toggle" id="news-toggle-btn" onclick="toggleNews()">Show more ▾</button>
+    </div>
+  </section>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       EDUCATION
+  ====================================================== -->
+  <section id="education">
+    <h2 class="section-title">Education</h2>
+    <ul class="edu-list">
+      <li class="edu-item">
+        <div class="edu-years">2024.09<br/>—<br/>2028.06</div>
+        <img class="edu-logo" src="assets/files/institute/xjtu.png" alt="XJTU"
+             onerror="this.style.display='none'" />
+        <div class="edu-content">
+          <div class="school">
+            <a href="https://www.xjtu.edu.cn/" target="_blank">Xi'an Jiaotong University (XJTU)</a>
+          </div>
+          <div class="dept">Institute of Artificial Intelligence and Robotics (IAIR)</div>
+          <div class="degree">BS in Artificial Intelligence</div>
+        </div>
+      </li>
+      <li class="edu-item">
+        <div class="edu-years">2026.09<br/>—<br/>2026.12</div>
+        <img class="edu-logo" src="assets/files/institute/hku.png" alt="HKU"
+             onerror="this.style.display='none'" />
+        <div class="edu-content">
+          <div class="school">
+            <a href="https://www.hku.hk/" target="_blank">The University of Hong Kong (HKU)</a>
+          </div>
+          <div class="dept">School of Computing & Data Science, Faculty of Engineering</div>
+          <div class="degree">Exchange Student</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       RESEARCH EXPERIENCE
+  ====================================================== -->
+  <section id="experience">
+    <h2 class="section-title">Research Experience</h2>
+    <ul class="exp-list">
+      <li class="exp-item">
+        <div class="exp-period">2025.03<br/>—<br/>Present</div>
+        <img class="exp-logo" src="assets/files/institute/pku.png" alt="PKU CFCS"
+             onerror="this.style.display='none'" />
+        <div class="exp-content">
+          <div class="org"><a href="https://cfcs.pku.edu.cn/" target="_blank">PKU CFCS</a></div>
+          <div class="role">Research Intern — Working on imitation algorithm for robotic manipulation, advised by Prof. Hao Dong and Dr. Jiyao Zhang.</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       PUBLICATIONS
+  ====================================================== -->
+  <section id="publications">
+    <h2 class="section-title">Selected Publications &nbsp;<a href="https://scholar.google.com/citations?user=r-zCeCEAAAAJ&hl=en" target="_blank" style="font-family:var(--font-mono);font-size:.78rem;font-weight:400;">[My Google Scholar]</a></h2>
+
+    <p style="font-size:.9rem;color:var(--text-muted);">Publications coming soon...</p>
+
+    <!--
+    <div class="pub-spotlight">
+      <div class="pub-spotlight-cols">
+        <div class="pub-spotlight-col">
+          <div class="pub-spotlight-col-title">📄 Top-Venue Papers</div>
+          <ul class="pub-spotlight-list">
+          </ul>
+        </div>
+        <div class="pub-spotlight-col">
+          <div class="pub-spotlight-col-title">🏆 Workshop Awards</div>
+          <ul class="pub-spotlight-list">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub-featured">
+    </div>
+
+    <div id="pub-media-lightbox" class="pub-lightbox" aria-hidden="true">
+      <div class="pub-lightbox-backdrop" data-close-lightbox></div>
+      <div class="pub-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Expanded media preview">
+        <button type="button" class="pub-lightbox-close" data-close-lightbox aria-label="Close preview">×</button>
+        <div class="pub-lightbox-stage" id="pub-lightbox-stage"></div>
+        <p class="pub-lightbox-caption" id="pub-lightbox-caption"></p>
+      </div>
+    </div>
+
+    <ul class="pub-list">
+    </ul>
+    <p style="margin-top:14px; font-size:.82rem; color:var(--text-light); font-family:var(--font-mono);">
+      <a href="https://scholar.google.com/citations?user=r-zCeCEAAAAJ&hl=en" target="_blank">Full list on Google Scholar →</a>
+    </p>
+    -->
+  </section>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       HONORS & ACADEMIC AWARDS
+  ====================================================== -->
+  <section id="honors">
+    <h2 class="section-title">Honors &amp; Academic Awards</h2>
+    <div class="honors-grid">
+
+      <div class="honor-card">
+        <div class="honor-card-media">
+          <img class="honor-card-img" src="assets/files/award/national_scholarship.png"
+               alt="National Scholarship" onerror="this.style.display='none'" />
+        </div>
+        <div class="honor-card-body">
+          <div class="award-name">National Scholarship 🏆</div>
+          <div class="award-event">2025, Top 2% in XJTU</div>
+        </div>
+      </div>
+
+      <div class="honor-card">
+        <div class="honor-card-media">
+          <img class="honor-card-img" src="assets/files/award/merit_student.png"
+               alt="Merit Student" onerror="this.style.display='none'" />
+        </div>
+        <div class="honor-card-body">
+          <div class="award-name">Merit Student 🏆</div>
+          <div class="award-event">2025, XJTU</div>
+        </div>
+      </div>
+
+      <div class="honor-card">
+        <div class="honor-card-media">
+          <img class="honor-card-img" src="assets/files/award/young_pioneer.png"
+               alt="Young Pioneer of the New Era" onerror="this.style.display='none'" />
+        </div>
+        <div class="honor-card-body">
+          <div class="award-name">Young Pioneer of the New Era 🏆</div>
+          <div class="award-event">2025, Qian Xuesen Honor College Top 30</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Other honors list -->
+    <!--
+    <br>
+    <ul class="honors-other" id="honors-other-list">
+    </ul>
+    <button class="news-toggle" id="honors-toggle-btn" onclick="toggleHonors()">Show more ▾</button>
+    -->
+  </section>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       PROGRAMMING COMPETITION AWARDS
+  ====================================================== -->
+  <section id="competitions">
+    <h2 class="section-title">Programming Competition Awards</h2>
+    <p style="font-size:.9rem;color:var(--text-muted);">Competition records coming soon...</p>
+    <!--
+    <ul class="prog-list">
+    </ul>
+    <ul class="prog-more">
+    </ul>
+    -->
+  </section>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       OPEN-SOURCE PROJECTS
+  ====================================================== -->
+  <section id="opensource">
+    <h2 class="section-title">Open-source Projects</h2>
+    <p style="font-size:.9rem;color:var(--text-muted);">Open-source projects coming soon...</p>
+    <!--
+    <ul class="oss-list">
+    </ul>
+    -->
+  </section>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       ACADEMIC SERVICES
+  ====================================================== -->
+  <section id="services">
+    <h2 class="section-title">Academic Services</h2>
+    <p style="font-size:.9rem;color:var(--text-muted);">Academic services coming soon...</p>
+    <!--
+    <ul class="svc-list">
+    </ul>
+    <ul class="svc-misc">
+    </ul>
+    -->
+  </section>
+
+  <hr class="unseen-section-divider" />
+
+  <!-- ======================================================
+       INVITED TALKS
+  ====================================================== -->
+  <section id="talks">
+    <h2 class="section-title">Invited Talks</h2>
+    <p style="font-size:.9rem;color:var(--text-muted);">Invited talks coming soon...</p>
+    <!--
+    <div class="talk-group">
+    </div>
+    -->
+  </section>
+
+
+  <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+  <footer class="site-footer">
+    <p>© Zimu Han &nbsp;·&nbsp; Latest updated Jul. 2026</p><br>
+    <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fhzmsailor.github.io%2F"><img src="https://api.visitorbadge.io/api/combined?path=https%3A%2F%2Fhzmsailor.github.io%2F&labelColor=%232ccce4&countColor=%230158f9" style="height: 20px;"></a>
+  </footer>
+
+</div>
+
+<script>
+  function toggleNews() {
+    const list = document.getElementById('news-list');
+    const btn = document.getElementById('news-toggle-btn');
+    list.classList.toggle('news-expanded');
+    btn.textContent = list.classList.contains('news-expanded') ? 'Show less ▴' : 'Show more ▾';
+  }
+  function toggleHonors() {
+    const hiddenItems = document.querySelectorAll('#honors-other-list li.honors-hidden');
+    const btn = document.getElementById('honors-toggle-btn');
+    const isHidden = hiddenItems[0] && getComputedStyle(hiddenItems[0]).display === 'none';
+    hiddenItems.forEach(item => { item.style.display = isHidden ? 'flex' : 'none'; });
+    btn.textContent = isHidden ? 'Show less ▴' : 'Show more ▾';
+  }
+
+  (function initPubFeaturedLightbox() {
+    const lightbox = document.getElementById('pub-media-lightbox');
+    const stage = document.getElementById('pub-lightbox-stage');
+    const caption = document.getElementById('pub-lightbox-caption');
+    if (!lightbox || !stage || !caption) return;
+
+    let activeMedia = null;
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (activeMedia) {
+        activeMedia.pause();
+        activeMedia = null;
+      }
+      stage.innerHTML = '';
+      caption.textContent = '';
+    }
+
+    function openLightbox(trigger) {
+      const type = trigger.dataset.mediaType;
+      const src = trigger.dataset.src;
+      const label = trigger.closest('.pub-featured-item')?.querySelector('.pub-featured-label')?.textContent?.trim() || '';
+      if (!src) return;
+
+      trigger.classList.add('is-pulse');
+      setTimeout(() => trigger.classList.remove('is-pulse'), 350);
+
+      stage.innerHTML = '';
+      caption.textContent = label;
+
+      if (type === 'video') {
+        const video = document.createElement('video');
+        video.src = src;
+        video.controls = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = false;
+        const rate = parseFloat(trigger.dataset.playbackRate || '1');
+        video.playbackRate = Number.isFinite(rate) ? rate : 1;
+        stage.appendChild(video);
+        activeMedia = video;
+        video.play().catch(() => {});
+      } else {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = label;
+        stage.appendChild(img);
+      }
+
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lightbox.querySelector('.pub-lightbox-close')?.focus();
+    }
+
+    document.querySelectorAll('.pub-featured-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => openLightbox(trigger));
+    });
+
+    lightbox.querySelectorAll('[data-close-lightbox]').forEach(el => {
+      el.addEventListener('click', closeLightbox);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+  })();
+
+</script>
+</body>
+</html>
