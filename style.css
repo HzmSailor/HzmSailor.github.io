@@ -726,6 +726,8 @@ hr.unseen-section-divider { border: none; margin: 0 0 var(--section-gap); }
 .edu-content .school { font-size: .97rem; font-weight: 600; }
 .edu-content .dept { font-size: .86rem; color: var(--text-muted); }
 .edu-content .degree { font-size: .86rem; color: var(--text-muted); font-style: italic; }
+.edu-content .degree .degree-meta { font-style: normal; }
+.edu-content .degree .degree-num { color: #dc2626; font-weight: 700; }
 .edu-logo {
   width: 80%;
   object-fit: contain;
