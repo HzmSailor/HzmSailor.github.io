@@ -690,6 +690,7 @@ hr.unseen-section-divider { border: none; margin: 0 0 var(--section-gap); }
   color: var(--text); font-weight: 600;
   text-decoration: underline; text-decoration-style: dotted;
 }
+.pub-authors sup { font-size: .7em; line-height: 0; vertical-align: super; }
 .pub-venue { font-size: .87rem; font-style: italic; color: var(--text-muted); }
 .pub-venue .venue-name { font-weight: 600; font-style: normal; color: var(--text); }
 .pub-award { font-size: .82rem; color: var(--award-color); font-weight: 600; }
