@@ -808,25 +808,40 @@ hr.unseen-section-divider { border: none; margin: 0 0 var(--section-gap); }
 }
 
 /* ---------- Honors & Competition Awards ---------- */
-.award-list { list-style: none; }
+.award-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
 .award-item {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
-  gap: 12px;
-  padding: 12px 6px;
-  border-bottom: 1px solid var(--border);
+  grid-template-columns: 42px minmax(0, 1fr);
+  column-gap: 16px;
   align-items: baseline;
 }
-.award-item:first-child { border-top: 1px solid var(--border); }
 .award-year {
   font-family: var(--font-mono);
-  font-size: .8rem;
+  font-size: .75rem;
   color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
-.award-name { font-size: .9rem; font-weight: 600; line-height: 1.45; }
-.award-detail, .award-result { font-size: .84rem; margin-top: 3px; line-height: 1.45; }
+.award-copy {
+  font-size: .9rem;
+  line-height: 1.65;
+}
+.award-name { font-weight: 600; }
 .award-detail { color: var(--text-muted); }
-.award-result { color: var(--award-color); font-weight: 600; }
+.award-detail::before {
+  content: " / ";
+  color: var(--border);
+  padding: 0 4px;
+}
+@media (max-width: 600px) {
+  .award-item { column-gap: 10px; }
+  .award-copy { font-size: .87rem; }
+  .award-detail { display: block; font-size: .82rem; }
+  .award-detail::before { content: none; }
+}
 
 /* Honors "other" list */
 .honors-other { list-style: none; }
