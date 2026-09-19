@@ -808,27 +808,33 @@ hr.unseen-section-divider { border: none; margin: 0 0 var(--section-gap); }
 }
 
 /* ---------- Honors & Competition Awards ---------- */
-.award-table-wrap {
-  overflow-x: auto;
+#honors { margin-bottom: 48px; }
+.awards-section .section-title {
+  font-size: 1.625rem;
+  margin-bottom: 16px;
 }
-.award-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: .86rem;
-  line-height: 1.65;
-  text-align: left;
+.award-list { list-style: none; }
+.award-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 24px;
+  align-items: baseline;
+  padding: 6px 0;
+  line-height: 1.6;
 }
-.award-table th,
-.award-table td {
-  padding: 5px 20px 5px 0;
-  white-space: nowrap;
-  vertical-align: baseline;
+.award-content { min-width: 0; overflow-wrap: anywhere; }
+.award-name {
+  margin-inline-end: 8px;
+  font-size: .9375rem;
+  font-weight: 600;
 }
-.award-table .award-name { font-weight: 600; }
-.award-table .award-detail { color: var(--text-muted); }
-.award-table .award-year {
-  padding-right: 0;
+.award-detail {
+  font-size: .875rem;
+  color: var(--text-muted);
+}
+.award-year {
   text-align: right;
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: .75rem;
   font-weight: 400;
@@ -993,6 +999,8 @@ hr.unseen-section-divider { border: none; margin: 0 0 var(--section-gap); }
 /* ---------- Responsive ---------- */
 
 @media (max-width: 700px) {
+  .awards-section .section-title { font-size: 1.375rem; }
+  .award-item { column-gap: 12px; }
   .container { padding: 36px 18px 60px; }
   html { scroll-padding-top: 48px; }
   .site-header h1 { font-size: 2.6rem; }
