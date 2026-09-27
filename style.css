@@ -23,6 +23,10 @@
   --max-width:        920px;
   --section-gap:      36px;
   --panel-bg:         rgba(255, 255, 255, .52);
+  --notice-bg-start:  #eff6ff;
+  --notice-bg-end:    #f5f3ff;
+  --notice-border:    #bfdbfe;
+  --notice-text:      #1e3a5f;
   --font-serif:       'Source Serif 4', Georgia, serif;
   --font-hand:        'Poppins', 'Segoe UI', sans-serif;
   --font-mono:        'JetBrains Mono', 'Courier New', monospace;
@@ -140,6 +144,23 @@ hr.unseen-section-divider { border: none; margin: 0 0 var(--section-gap); }
 }
 .bio-text p { margin-bottom: 12px; font-size: .96rem; }
 .bio-text p:last-child { margin-bottom: 0; }
+.bio-text .phd-notice {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border: 1px solid var(--notice-border);
+  border-radius: 12px;
+  background: linear-gradient(120deg, var(--notice-bg-start), var(--notice-bg-end));
+  box-shadow: 0 3px 12px rgba(37, 99, 235, .06);
+  font-family: var(--font-hand);
+  font-size: .85rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--notice-text);
+}
+.phd-notice strong {
+  color: var(--accent);
+  font-weight: 500;
+}
 .bio-badges {
   display: flex;
   flex-wrap: wrap;
