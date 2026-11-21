@@ -133,7 +133,10 @@ async function archiveNote(note, archived, button) {
   try {
     await api(archived ? 'notes_archive' : 'notes_restore', {id: note.id, revision: note.revision});
     if (!context.is_admin || context.user_id !== user) return;
-    if (edit?.id === note.id) resetEditor();
+    if (edit?.id === note.id) {
+      resetEditor();
+      history.replaceState(null, '', location.pathname);
+    }
     status('note-manage-status', archived ? '已移到回收站，可随时恢复。' : '笔记已恢复。');
     await loadManager();
   } catch (error) { status('note-manage-status', error.message, true); button.disabled = false; }
