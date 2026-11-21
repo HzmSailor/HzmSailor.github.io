@@ -1,32 +1,44 @@
 # Blog 维护说明
 
-## 当前结构
+## 页面与行为
 
-- `/blog/`：Blog 首页，连接两个分类。
-- `/blog/academic/`：Academic，所有文章公开。
-- `/blog/daily/`：Daily，目前只展示公开文章。
-- `blog.css`：Blog 专用样式，复用根目录 `style.css` 的字体和主题。
+- `/blog/`：分类、最近文章、GitHub 登录和 Friend 申请。
+- `/blog/academic/`、`/blog/daily/`：公开文章，目前各有一篇 Example。
+- `/blog/admin/`：只有管理员能读取申请人的 GitHub 资料、邮箱、申请时间并批准或不批准。
+- `/blog/auth/callback/`：GitHub OAuth 返回页，使用 PKCE 交换凭据。
+- Friend/管理员登录后显示“欢迎我的朋友！”，其他登录用户显示“欢迎您！”。
+- 申请在数据库保存成功后显示“已发送申请”，刷新后保留；每个账号一条申请。被拒绝后仍显示已发送，不发拒绝邮件。
+- 批准在同一事务内授予权限并创建通知任务，随后立即发信。通知失败会明确显示并提供重试按钮，不会假报发送成功。
 
-目前每个分类各有一篇明确标注为 Example 的公开示例文章，Blog 首页汇总两篇文章。尚未启用身份认证或授权功能；页面都是可直接访问的静态 HTML，不需要构建或安装依赖。
+页面仍是无需构建的 HTML/CSS/JavaScript。浏览器只保存公开函数地址，所有 OAuth、SMTP 和服务端密钥都在服务端配置，不能提交到仓库。
 
-## 添加公开文章
+## 后端
 
-1. 在相应分类下新建文章目录和 `index.html`，例如 `academic/my-first-note/index.html`。
-2. 参考已有示例文章，按层级调整相对路径；正文放在 `.blog-prose` 中。
-3. 在分类页和 Blog 首页更新文章链接、日期和摘要。正式内容移除 Example 标记和示例说明。
-4. 发布前检查桌面与手机布局，以及文章中的本地链接。
+Supabase Free 项目：`coqojtfkateioxsoeugn`（Blog）。
 
-## Daily 私密文章的后续方案
+1. 应用 `supabase/migrations/202611210001_friend_access.sql`。申请、角色、邮件表都启用 RLS，浏览器没有直接读写权限；只有经验证的 Edge Function 能操作。
+2. 部署 `supabase/functions/friend-access/index.ts` 及 `_shared/friend-service.mjs`。每个受保护请求都调用 `Auth.getUser` 验证用户；审批额外检查管理员。
+3. 按 `supabase/config.toml` 关闭不兼容新版登录凭据的旧版 JWT 网关校验，由函数代码验证。GET 只提供公开的 anon 配置，不能返回 service role key。
+4. 所有者 GitHub 数字 ID 固定为 `173534334`（HzmSailor）。第一次真实登录会在服务端自动绑定管理员；不能通过修改昵称或 user_metadata 获得角色。
+5. GitHub OAuth App：`Zimu Han Blog`，应用设置 ID `4041260`。Homepage 为 `https://hzmsailor.github.io/blog/`，回调为 `https://coqojtfkateioxsoeugn.supabase.co/auth/v1/callback`。Client Secret 只配置到 Supabase GitHub provider。
+6. Supabase Site URL：`https://hzmsailor.github.io/blog/`；Redirect URLs 只加入精确地址 `https://hzmsailor.github.io/blog/auth/callback/`。
+7. 通知使用 Gmail SMTP（`smtp.gmail.com:465`，TLS）。在 Edge Functions Secrets 设置 `BLOG_SMTP_USER` 为发件 Gmail 地址、`BLOG_SMTP_PASSWORD` 为 Gmail 应用专用密码。不要使用 Gmail 日常登录密码，不要在聊天或仓库中保存应用密码。Google 要求先开启两步验证；应用密码需要由账号所有者亲自生成和填入。
+8. `BLOG_SITE_URL` 默认是 `https://hzmsailor.github.io`。本地验证使用单独测试项目或隔离模拟服务，不扩大生产跨域白名单。
 
-用户已排除共享密码和浏览器口令解密方案，后续采用按个人身份授权的方向；具体服务尚未选定。**不要将私密文章的明文、密码或服务端密钥提交到公开仓库**。图片和附件也必须受相同保护。
+## 邮件可靠性
 
-建议的行为：
+只有批准会创建邮件记录。数据库中的邮件锁防止并发重复发送，已记录发送成功的通知不会重发。失败保留任务，管理员可以重试。SMTP 在“服务器已接受但客户端断线”等极少数不确定状态下无法保证严格只投递一次，固定 Message-ID 用于关联同一通知。
 
-- 未登录或未获授权的访客只能获取公开文章。
-- 管理员将某位访客加入授权名单；对方通过邮箱验证码或个人账户登录后，可以获取全部 Daily 文章。
-- 移出名单后，后续读取私密内容的请求被拒绝；已被读者保存的内容无法收回。
-- 私密文章正文、目录、图片和附件均由服务端校验身份及实时授权，不能只在前端判断登录状态。
+## 私密文章
 
-适合保留 GitHub Pages 前端的实现方向是 Supabase Auth 邮箱登录，配合数据库行级权限（RLS）中的授权名单，以及私有 Storage 的读取策略。另一方向是将私密内容放在 Cloudflare Worker 等源站后，通过 Access 邮箱白名单保护；公开 GitHub 仓库和 GitHub Pages 不得发布相同的私密明文。
+迁移包含 `blog_private_posts` 表，每次读取都会查询当前 Friend 权限，撤销后阻止后续读取。目前没有写入私密正文，也没有加入私密文章阅读界面。后续正文、目录和附件必须由受保护服务提供；不能把明文放进公开仓库，或只在前端隐藏链接。
 
-如果要求普通访客连私密文章的标题和数量也看不到，私密目录和元数据也必须由服务端在授权后提供，不能只在前端隐藏链接。当前页面不展示任何私密文章入口或模拟登录功能。
+## 检查
+
+- `node --test tests/friend-service.test.mjs`：会话验证、审批权限、拒绝不发信、批准通知和错误反馈。
+- `tests/database.test.mjs` 用 PGlite 执行真实 PostgreSQL SQL，检查 RLS、重复申请、审批事务、邮件锁与撤销。将 `@electric-sql/pglite` 安装到独立测试目录，设置 `PGLITE_MODULE` 为其 `dist/index.js` 绝对路径，再运行 Node 测试。
+- 前端检查桌面和手机布局。实际 OAuth、SMTP 配置完成后，需要真实测试访客验证一次完整申请、审批和通知。
+
+## 文章维护
+
+在分类下新建文章目录和 `index.html`，参考现有 Example。保留账户栏、导航、CSS 和 auth.js，调整好相对路径；更新分类列表和 Blog 首页的标题、日期与摘要。正式内容移除 Example 标签。

@@ -12,8 +12,25 @@
 <div class="container">
   <header class="blog-header">
     <a class="blog-author" href="../../../">Zimu Han</a>
-    <a class="blog-home" href="../../../">Homepage</a>
+    <div class="blog-header-actions">
+  <a class="blog-home" href="../../../">Homepage</a>
+      <button class="blog-button" id="blog-login" type="button" aria-label="使用 GitHub 登录">登录</button>
+      <button class="blog-button" id="blog-logout" type="button" hidden>退出</button>
+    </div>
   </header>
+
+  <section class="blog-account" aria-label="Blog 账户" lang="zh-CN">
+    <div class="blog-account-summary">
+      <img id="blog-account-avatar" width="40" height="40" alt="" hidden />
+      <div><p id="blog-greeting">欢迎来到我的 Blog</p><p id="blog-account-note">公开文章无需登录；Friend 可以阅读全部 Daily。</p></div>
+    </div>
+    <div class="blog-account-actions">
+      <button class="blog-button" id="blog-friend-apply" type="button" hidden>申请 Friend 权限</button>
+      <a class="blog-button" id="blog-admin-link" href="../../admin/" hidden>审批 Friend 申请</a>
+    </div>
+    <p id="blog-request-note" class="blog-auth-message" hidden>申请会将 GitHub 资料和绑定邮箱提供给作者，批准后通过该邮箱通知。</p>
+    <p class="blog-auth-message" id="blog-auth-message" role="status" aria-live="polite"></p>
+  </section>
 
   <main id="main-content">
     <nav class="blog-nav" aria-label="Blog navigation">
@@ -59,5 +76,6 @@
 
   <footer class="site-footer"><p>© Zimu Han</p></footer>
 </div>
+<script type="module" src="../../auth.js"></script>
 </body>
 </html>

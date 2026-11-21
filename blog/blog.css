@@ -27,6 +27,31 @@
   color: var(--text-muted);
 }
 
+[hidden] { display: none !important; }
+.blog-header-actions, .blog-account-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.blog-button {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 38px; padding: 7px 14px;
+  border: 1px solid var(--border); border-radius: 4px;
+  background: var(--panel-bg); color: var(--text); cursor: pointer;
+  font-family: var(--font-hand); font-size: .875rem; line-height: 1.5;
+}
+.blog-button:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.blog-button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.blog-button:disabled { cursor: default; color: var(--text-muted); opacity: .75; }
+.blog-account { margin: -24px 0 36px; padding: 18px 20px; border: 1px solid var(--border); border-radius: 6px; background: var(--panel-bg); }
+.blog-account-summary { display: flex; gap: 12px; align-items: center; }
+.blog-account-summary img { border-radius: 50%; flex-shrink: 0; }
+#blog-greeting { font-family: var(--font-hand); font-weight: 500; }
+#blog-account-note { color: var(--text-muted); font-size: .875rem; }
+.blog-account-actions:not(:empty) { margin-top: 12px; }
+.blog-auth-message { font-size: .875rem; color: var(--text-muted); }
+.blog-auth-message:not(:empty) { margin-top: 12px; }
+.blog-auth-message.is-error { color: #a32d2d; }
+.blog-request-card { padding: 24px 0; border-top: 1px solid var(--border); overflow-wrap: anywhere; }
+.blog-request-card h2 { font-size: 1.25rem; }
+.blog-request-card p { color: var(--text-muted); font-size: .9375rem; }
+
 .blog-intro { margin-bottom: 28px; }
 .blog-intro h1 {
   font-family: var(--font-hand);
@@ -175,6 +200,9 @@
 
 @media (max-width: 700px) {
   .blog-header { margin-bottom: 40px; }
+  .blog-header { gap: 12px; }
+  .blog-header-actions { gap: 8px; }
+  .blog-account { margin-top: -12px; padding: 16px; }
   .blog-intro h1 { font-size: 2.5rem; }
   .blog-categories { grid-template-columns: 1fr; gap: 16px; }
   .blog-category { padding: 24px; }

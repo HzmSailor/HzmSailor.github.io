@@ -1,0 +1,6 @@
+project_id = "hzmsailor-blog"
+
+[functions.friend-access]
+# The function validates EVERY bearer token with Auth.getUser itself, including
+# modern ES256 sessions. No public or client-provided role is trusted.
+verify_jwt = false
