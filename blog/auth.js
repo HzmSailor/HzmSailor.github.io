@@ -12,6 +12,7 @@ const adminLink = document.getElementById('blog-admin-link');
 const requestNote = document.getElementById('blog-request-note');
 const adminList = document.getElementById('blog-admin-list');
 const adminNote = document.getElementById('blog-admin-note');
+const checkEmailButton = document.getElementById('blog-check-email');
 let client;
 let session;
 let status;
@@ -45,6 +46,7 @@ function signedOut() {
   greeting.textContent = '欢迎来到我的 Blog';
   accountNote.textContent = '公开文章无需登录；Friend 可以阅读全部 Daily。';
   if (adminList) adminList.replaceChildren();
+  if (checkEmailButton) checkEmailButton.hidden = true;
   if (adminNote) adminNote.textContent = '请先登录管理员账号。';
 }
 
@@ -61,6 +63,7 @@ function renderStatus(value) {
   friendButton.textContent = value.request_sent ? '已发送申请' : '申请 Friend 权限';
   friendButton.disabled = value.request_sent;
   adminLink.hidden = !value.is_admin;
+  if (checkEmailButton) checkEmailButton.hidden = !value.is_admin;
 }
 
 async function refresh() {
@@ -177,6 +180,14 @@ friendButton.addEventListener('click', async () => {
     friendButton.textContent = '申请 Friend 权限'; friendButton.disabled = false;
     notify(error.message, true);
   }
+});
+
+checkEmailButton?.addEventListener('click', async () => {
+  checkEmailButton.disabled = true;
+  notify('正在检查通知邮件连接…');
+  try { await api('check_email'); notify('通知邮件连接正常，可以发送批准通知。'); }
+  catch (error) { notify(error.message, true); }
+  finally { checkEmailButton.disabled = false; }
 });
 
 async function initialize() {

@@ -22,6 +22,7 @@ function setup({admin = false, friend = false, requestSent = false, mailError = 
     publicConfig: {supabaseUrl: 'https://example.supabase.co', supabasePublicKey: 'public'},
     authenticate: async token => token === 'valid' ? currentUser : null,
     sendEmail: async value => { calls.emails.push(value); if (mailError) throw Error('failed'); return 'mail-id'; },
+    verifyEmail: async () => { if (mailError) throw Error('failed'); },
   });
   const call = async (body, token = 'valid', origin = 'https://example.com') => handler(new Request('https://api.example.com', {
     method: 'POST', headers: {Authorization: `Bearer ${token}`, Origin: origin, 'Content-Type': 'application/json'}, body: JSON.stringify(body),
@@ -66,7 +67,7 @@ test('successful application uses verified account email and persists submission
 });
 test('ordinary visitors cannot list applicants or approve/reject requests', async () => {
   const {call, calls} = setup();
-  for (const action of ['list', 'review', 'retry_email']) {
+  for (const action of ['list', 'review', 'retry_email', 'check_email']) {
     assert.equal((await call({action, request_id: requestId, decision: 'approved'})).status, 403);
   }
   assert.equal(calls.reviews.length, 0); assert.equal(calls.emails.length, 0);
@@ -75,6 +76,12 @@ test('rejection does not send an email', async () => {
   const {call, calls} = setup({admin: true});
   const response = await (await call({action: 'review', request_id: requestId, decision: 'rejected'})).json();
   assert.equal(response.email, 'not_sent'); assert.equal(calls.emails.length, 0);
+});
+test('admin can verify SMTP without sending messages, and failures are reported', async () => {
+  const good = setup({admin: true});
+  assert.equal((await (await good.call({action: 'check_email'})).json()).email_ready, true);
+  assert.equal(good.calls.emails.length, 0);
+  assert.equal((await setup({admin: true, mailError: true}).call({action: 'check_email'})).status, 503);
 });
 test('approval sends notification to the stored recipient with an idempotency key', async () => {
   const {call, calls} = setup({admin: true});

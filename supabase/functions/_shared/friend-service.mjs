@@ -33,7 +33,7 @@ export async function deliverApproval(store, sendEmail, requestId, siteUrl) {
   }
 }
 
-export function createFriendHandler({authenticate, store, sendEmail, siteUrl, publicConfig, ownerGithubId = '173534334'}) {
+export function createFriendHandler({authenticate, store, sendEmail, verifyEmail, siteUrl, publicConfig, ownerGithubId = '173534334'}) {
   const origin = new URL(siteUrl).origin;
   return async request => {
     const cors = {'Access-Control-Allow-Origin': origin, 'Access-Control-Allow-Headers': 'authorization, apikey, content-type, x-client-info',
@@ -72,6 +72,10 @@ export function createFriendHandler({authenticate, store, sendEmail, siteUrl, pu
       }
       if (!admin) throw new HttpError(403, '只有管理员可以审批申请。');
       if (input.action === 'list') return json({requests: await store.listRequests()});
+      if (input.action === 'check_email') {
+        try { await verifyEmail(); return json({email_ready: true}); }
+        catch { throw new HttpError(503, '通知邮件连接失败，请检查 Gmail 应用专用密码是否已保存。'); }
+      }
       if (!/^[0-9a-f-]{36}$/i.test(input.request_id || '')) throw new HttpError(400, '申请编号不正确。');
       if (input.action === 'review') {
         if (!['approved', 'rejected'].includes(input.decision)) throw new HttpError(400, '审批结果不正确。');

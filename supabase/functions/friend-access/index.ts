@@ -29,6 +29,19 @@ const store = {
   },
 };
 
+async function gmailTransport() {
+  const user = Deno.env.get('BLOG_SMTP_USER');
+  const password = Deno.env.get('BLOG_SMTP_PASSWORD');
+  if (!user || !password) throw new Error('Gmail SMTP is not configured');
+  const {default: nodemailer} = await import('npm:nodemailer@10.6.1');
+  return {user, transport: nodemailer.createTransport({
+    host: 'smtp.gmail.com', port: 465, secure: true,
+    auth: {user, pass: password.replace(/\s/g, '')},
+    connectionTimeout: 10000, greetingTimeout: 10000, socketTimeout: 15000,
+    disableFileAccess: true, disableUrlAccess: true,
+  })};
+}
+
 const handler = createFriendHandler({
   store,
   publicConfig: {supabaseUrl: Deno.env.get('SUPABASE_URL'), supabasePublicKey: Deno.env.get('SUPABASE_ANON_KEY')},
@@ -37,17 +50,12 @@ const handler = createFriendHandler({
     const {data, error} = await client.auth.getUser(token);
     return error ? null : data.user;
   },
+  async verifyEmail() {
+    const {transport} = await gmailTransport();
+    await transport.verify();
+  },
   async sendEmail(message: {id: string; to: string; subject: string; text: string}) {
-    const user = Deno.env.get('BLOG_SMTP_USER');
-    const password = Deno.env.get('BLOG_SMTP_PASSWORD');
-    if (!user || !password) throw new Error('Gmail SMTP is not configured');
-    const {default: nodemailer} = await import('npm:nodemailer@10.6.1');
-    const transport = nodemailer.createTransport({
-      host: 'smtp.gmail.com', port: 465, secure: true,
-      auth: {user, pass: password.replace(/\s/g, '')},
-      connectionTimeout: 10000, greetingTimeout: 10000, socketTimeout: 15000,
-      disableFileAccess: true, disableUrlAccess: true,
-    });
+    const {user, transport} = await gmailTransport();
     const result = await transport.sendMail({
       from: {name: 'Zimu Han', address: user}, to: message.to,
       subject: message.subject, text: message.text,
