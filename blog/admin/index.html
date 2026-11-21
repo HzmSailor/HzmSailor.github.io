@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Friend 申请管理 | Zimu Han</title>
+  <title>Blog 管理 | Zimu Han</title>
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="../../style.css" />
-  <link rel="stylesheet" href="../blog.css?v=20261121-friend-access" />
+  <link rel="stylesheet" href="../blog.css?v=20261121-notes" />
 </head>
-<body class="blog-page">
+<body class="blog-page blog-admin-page">
 <div class="container">
   <header class="blog-header">
     <a class="blog-author" href="../../">Zimu Han</a>
@@ -22,22 +22,73 @@
   <section class="blog-account" aria-label="Blog 账户" lang="zh-CN">
     <div class="blog-account-summary">
       <img id="blog-account-avatar" width="40" height="40" alt="" hidden />
-      <div><p id="blog-greeting">欢迎来到我的 Blog</p><p id="blog-account-note">公开文章无需登录；Friend 可以阅读全部 Daily。</p></div>
+      <div><p id="blog-greeting">欢迎来到我的 Blog</p><p id="blog-account-note">公开笔记无需登录；Friend 可以阅读“需要权限”的笔记。</p></div>
     </div>
     <div class="blog-account-actions">
       <button class="blog-button" id="blog-friend-apply" type="button" hidden>申请 Friend 权限</button>
-      <a class="blog-button" id="blog-admin-link" href="../admin/" hidden>审批 Friend 申请</a>
+      <a class="blog-button" id="blog-admin-link" href="../admin/" hidden>管理 Blog</a>
     </div>
     <p id="blog-request-note" class="blog-auth-message" hidden>申请会将 GitHub 资料和绑定邮箱提供给作者，批准后通过该邮箱通知。</p>
     <p class="blog-auth-message" id="blog-auth-message" role="status" aria-live="polite"></p>
   </section>
 
-  <main id="main-content" lang="zh-CN"><div class="blog-intro"><h1>Friend 申请管理</h1><p>批准后授予权限并发送通知邮件；不批准则不发邮件。</p></div><button class="blog-button" id="blog-check-email" type="button" hidden>检查通知邮件连接</button><p id="blog-admin-note">请先登录管理员账号。</p><div id="blog-admin-list"></div></main>
+  <main id="main-content" lang="zh-CN">
+    <div class="blog-intro"><h1>Blog 管理</h1><p>写下笔记，决定与谁分享。</p></div>
+    <nav class="blog-nav" aria-label="返回 Blog"><a href="../">返回 Blog</a></nav>
+    <p id="blog-admin-gate">请先登录管理员账号。</p>
+    <div class="blog-admin-modes" id="blog-admin-modes" aria-label="管理模式" hidden>
+      <button class="blog-button" id="mode-notes" type="button" aria-pressed="true">笔记管理</button>
+      <button class="blog-button" id="mode-friends" type="button" aria-pressed="false">Friend 审批</button>
+    </div>
+    <section id="blog-notes-panel" aria-label="笔记管理">
+      <div id="blog-note-manager" hidden>
+        <div class="note-manager-toolbar">
+          <button class="blog-button" id="note-new" type="button">新建笔记</button>
+          <label class="note-trash-filter"><input id="note-show-trash" type="checkbox" /> 回收站</label>
+        </div>
+        <div class="note-manager-layout">
+          <aside class="note-manager-sidebar" aria-label="笔记列表">
+            <p class="blog-auth-message" id="note-manage-status" role="status"></p>
+            <div id="note-manage-list"></div>
+            <button class="blog-button" id="note-manage-more" type="button" hidden>加载更多笔记</button>
+          </aside>
+          <section class="note-editor" aria-labelledby="note-editor-heading">
+            <h2 id="note-editor-heading">新建笔记</h2>
+            <form id="note-form">
+              <label for="note-title">标题</label>
+              <input id="note-title" type="text" maxlength="200" required autocomplete="off" />
+              <div class="note-editor-options">
+                <div><label for="note-category">分类</label><select id="note-category"><option value="daily">Daily</option><option value="academic">Academic</option></select></div>
+                <div><label for="note-visibility">可见性</label><select id="note-visibility"><option value="private">私密（仅管理员）</option><option value="friends">需要权限（Friend）</option><option value="public">公开（任何人）</option></select></div>
+              </div>
+              <label for="note-summary">摘要</label>
+              <textarea id="note-summary" rows="2" maxlength="600"></textarea>
+              <label for="note-content">正文（Markdown）</label>
+              <textarea id="note-content" rows="14" maxlength="200000" spellcheck="false"></textarea>
+              <details class="note-preview-panel"><summary>预览 Markdown</summary><div class="blog-prose" id="note-preview"></div></details>
+              <div class="blog-account-actions">
+                <button class="blog-button note-save" id="note-save" type="submit">保存笔记</button>
+                <a class="blog-button" id="note-open-link" target="_blank" rel="noopener noreferrer" hidden>打开阅读页</a>
+              </div>
+              <p class="blog-auth-message" id="note-dirty"></p>
+              <p class="blog-auth-message" id="note-editor-status" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+        </div>
+      </div>
+    </section>
+    <section id="blog-friends-panel" aria-label="Friend 审批" hidden>
+      <h2>Friend 申请</h2><p>批准后授予权限并发送通知邮件；不批准则不发邮件。</p>
+      <button class="blog-button" id="blog-check-email" type="button" hidden>检查通知邮件连接</button>
+      <p id="blog-admin-note">请先登录管理员账号。</p><div id="blog-admin-list"></div>
+    </section>
+  </main>
 
   <footer class="site-footer">
     <p>© Zimu Han</p>
   </footer>
 </div>
-<script type="module" src="../auth.js?v=20261121-friend-access"></script>
+<script type="module" src="../auth.js?v=20261121-notes"></script>
+<script type="module" src="../notes.js?v=20261121-notes"></script>
 </body>
 </html>

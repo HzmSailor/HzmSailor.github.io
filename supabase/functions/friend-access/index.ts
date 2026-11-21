@@ -1,11 +1,42 @@
 import {createClient} from 'npm:@supabase/supabase-js@2.119.2';
 import {createFriendHandler} from '../_shared/friend-service.mjs';
+import {handleNoteAction} from '../_shared/note-service.mjs';
 
 const client = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {
   auth: {persistSession: false, autoRefreshToken: false},
 });
 const checked = (result: any) => { if (result.error) throw result.error; return result.data; };
 const rpc = async (name: string, args: object) => checked(await client.rpc(name, args));
+const singleRpc = async (name: string, args: object) => {
+  const result = await rpc(name, args);
+  return Array.isArray(result) ? result[0] : result;
+};
+
+function noteStore(token: string | null) {
+  const reader = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, {
+    auth: {persistSession: false, autoRefreshToken: false},
+    global: {headers: token ? {Authorization: `Bearer ${token}`} : {}},
+  });
+  return {
+    async list({category, offset, limit, archived}: any) {
+      let query = reader.from('blog_notes')
+        .select('id,title,summary,category,visibility,published_at,updated_at,revision,archived_at')
+        .order('published_at', {ascending: false}).order('id', {ascending: false});
+      query = archived ? query.not('archived_at', 'is', null) : query.is('archived_at', null);
+      if (category !== 'all') query = query.eq('category', category);
+      return checked(await query.range(offset, offset + limit - 1));
+    },
+    async read(id: string) { return checked(await reader.from('blog_notes').select('*').eq('id', id).maybeSingle()); },
+    async save(actor: string, note: any) {
+      return singleRpc('blog_save_note', {p_actor: actor, p_id: note.id || null, p_title: note.title,
+        p_summary: note.summary, p_content: note.content, p_category: note.category,
+        p_visibility: note.visibility, p_revision: note.revision || 0});
+    },
+    async archive(actor: string, id: string, revision: number, archived: boolean) {
+      return singleRpc('blog_archive_note', {p_actor: actor, p_id: id, p_revision: revision, p_archived: archived});
+    },
+  };
+}
 
 const store = {
   async ensureOwner(id: string) { checked(await client.from('blog_admins').upsert({user_id: id}, {onConflict: 'user_id'})); },
@@ -44,6 +75,9 @@ async function gmailTransport() {
 
 const handler = createFriendHandler({
   store,
+  async notes(input: any, context: any) {
+    return handleNoteAction(input, {...context, store: noteStore(context.token)});
+  },
   publicConfig: {supabaseUrl: Deno.env.get('SUPABASE_URL'), supabasePublicKey: Deno.env.get('SUPABASE_ANON_KEY')},
   siteUrl: Deno.env.get('BLOG_SITE_URL') || 'https://hzmsailor.github.io',
   async authenticate(token: string) {

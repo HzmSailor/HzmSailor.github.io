@@ -22,7 +22,7 @@ export async function deliverApproval(store, sendEmail, requestId, siteUrl) {
     const providerId = await sendEmail({
       id: `friend-approved/${job.id}`, to: job.recipient,
       subject: '你的 Friend 权限申请已通过',
-      text: `欢迎我的朋友！\n\n你的 Friend 权限申请已通过。现在可以使用原来的 GitHub 账号登录 Blog，阅读全部 Daily 文章。\n\n${siteUrl}/blog/\n\nZimu Han`,
+      text: `欢迎我的朋友！\n\n你的 Friend 权限申请已通过。现在可以使用原来的 GitHub 账号登录 Blog，阅读向 Friend 开放的笔记。\n\n${siteUrl}/blog/\n\nZimu Han`,
     });
     await store.finishEmail(job, providerId, null);
     return 'sent';
@@ -33,7 +33,7 @@ export async function deliverApproval(store, sendEmail, requestId, siteUrl) {
   }
 }
 
-export function createFriendHandler({authenticate, store, sendEmail, verifyEmail, siteUrl, publicConfig, ownerGithubId = '173534334'}) {
+export function createFriendHandler({authenticate, store, sendEmail, verifyEmail, notes, siteUrl, publicConfig, ownerGithubId = '173534334'}) {
   const origin = new URL(siteUrl).origin;
   return async request => {
     const cors = {'Access-Control-Allow-Origin': origin, 'Access-Control-Allow-Headers': 'authorization, apikey, content-type, x-client-info',
@@ -48,15 +48,24 @@ export function createFriendHandler({authenticate, store, sendEmail, verifyEmail
     if (request.method === 'GET') return json(publicConfig);
     if (request.method !== 'POST') return json({error: '只支持 POST。'}, 405);
     try {
-      const bearer = request.headers.get('authorization') || '';
-      if (!bearer.startsWith('Bearer ')) throw new HttpError(401, '请先登录。');
-      const user = await authenticate(bearer.slice(7));
-      if (!user) throw new HttpError(401, '登录已过期，请重新登录。');
-      const profile = githubProfile(user);
-      if (profile.id === ownerGithubId) await store.ensureOwner(user.id);
+      const raw = await request.text();
+      if (raw.length > 300000) throw new HttpError(413, '笔记正文过长。');
       let input;
-      try { input = await request.json(); } catch { throw new HttpError(400, '请求格式不正确。'); }
-      const admin = await store.isAdmin(user.id);
+      try { input = JSON.parse(raw); } catch { throw new HttpError(400, '请求格式不正确。'); }
+      if (!input || typeof input !== 'object' || typeof input.action !== 'string') throw new HttpError(400, '请求格式不正确。');
+      const publicRead = ['notes_list', 'notes_read'].includes(input.action);
+      const bearer = request.headers.get('authorization') || '';
+      if ((!bearer && !publicRead) || (bearer && !bearer.startsWith('Bearer '))) throw new HttpError(401, '请先登录。');
+      const token = bearer ? bearer.slice(7) : null;
+      const user = token ? await authenticate(token) : null;
+      if (bearer && !user) throw new HttpError(401, '登录已过期，请重新登录。');
+      const profile = user ? githubProfile(user) : null;
+      if (profile?.id === ownerGithubId) await store.ensureOwner(user.id);
+      const admin = user ? await store.isAdmin(user.id) : false;
+      if (input.action.startsWith('notes_')) {
+        if (!notes) throw new HttpError(400, '笔记服务尚未启用。');
+        return json(await notes(input, {user, token, admin}));
+      }
       if (input.action === 'status') {
         return json({profile, is_admin: admin, is_friend: admin || await store.isFriend(user.id),
           request_sent: Boolean(await store.requestForUser(user.id))});

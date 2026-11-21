@@ -6,7 +6,7 @@
   <title>Daily | Zimu Han's Blog</title>
   <meta name="description" content="Personal reflections and everyday moments by Zimu Han." />
   <link rel="stylesheet" href="../../style.css" />
-  <link rel="stylesheet" href="../blog.css?v=20261121-friend-access" />
+  <link rel="stylesheet" href="../blog.css?v=20261121-notes" />
 </head>
 <body class="blog-page">
 <div class="container">
@@ -22,11 +22,11 @@
   <section class="blog-account" aria-label="Blog 账户" lang="zh-CN">
     <div class="blog-account-summary">
       <img id="blog-account-avatar" width="40" height="40" alt="" hidden />
-      <div><p id="blog-greeting">欢迎来到我的 Blog</p><p id="blog-account-note">公开文章无需登录；Friend 可以阅读全部 Daily。</p></div>
+      <div><p id="blog-greeting">欢迎来到我的 Blog</p><p id="blog-account-note">公开笔记无需登录；Friend 可以阅读“需要权限”的笔记。</p></div>
     </div>
     <div class="blog-account-actions">
       <button class="blog-button" id="blog-friend-apply" type="button" hidden>申请 Friend 权限</button>
-      <a class="blog-button" id="blog-admin-link" href="../admin/" hidden>审批 Friend 申请</a>
+      <a class="blog-button" id="blog-admin-link" href="../admin/" hidden>管理 Blog</a>
     </div>
     <p id="blog-request-note" class="blog-auth-message" hidden>申请会将 GitHub 资料和绑定邮箱提供给作者，批准后通过该邮箱通知。</p>
     <p class="blog-auth-message" id="blog-auth-message" role="status" aria-live="polite"></p>
@@ -45,17 +45,14 @@
     </nav>
 
     <section aria-labelledby="posts-heading">
-      <h2 class="blog-list-title" id="posts-heading">Public posts</h2>
-      <!-- Public articles only. Add private entries after real access control is configured. -->
-      <ul class="blog-post-list">
-        <li>
-          <article class="blog-post-card">
-            <div class="blog-post-meta"><span>Example · Public</span><time datetime="2026-11-21">Nov 21, 2026</time></div>
-            <h3 lang="zh-CN"><a href="ordinary-days-example/">给日常留一点空白</a></h3>
-            <p lang="zh-CN">关于散步、随手记录，以及不必急着得到答案的小问题。</p>
-          </article>
-        </li>
-      </ul>
+      <h2 class="blog-list-title" id="posts-heading">Posts</h2>
+      <!-- Lists are filtered by the server according to the current reader. -->
+      <ul class="blog-post-list" id="blog-notes-list" data-category="daily" lang="zh-CN"></ul>
+      <p class="blog-auth-message" id="notes-status" role="status" lang="zh-CN">正在读取笔记…</p>
+      <div class="blog-account-actions" lang="zh-CN">
+        <button class="blog-button" id="notes-more" type="button" hidden>加载更多</button>
+        <button class="blog-button" id="notes-refresh" type="button">刷新笔记</button>
+      </div>
     </section>
   </main>
 
@@ -63,6 +60,7 @@
     <p>© Zimu Han</p>
   </footer>
 </div>
-<script type="module" src="../auth.js?v=20261121-friend-access"></script>
+<script type="module" src="../auth.js?v=20261121-notes"></script>
+<script type="module" src="../notes.js?v=20261121-notes"></script>
 </body>
 </html>

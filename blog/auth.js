@@ -17,17 +17,28 @@ let client;
 let session;
 let status;
 let busy = false;
+let requestsSequence = 0;
+let authContext = {ready: false, user_id: null, is_admin: false, is_friend: false};
+
+export function getBlogAuth() { return {...authContext}; }
+function announceAuth(next) {
+  if (JSON.stringify(next) === JSON.stringify(authContext)) return;
+  authContext = next;
+  window.dispatchEvent(new CustomEvent('blog-auth-change', {detail: getBlogAuth()}));
+}
 
 function notify(text, error = false) {
   message.textContent = text;
   message.classList.toggle('is-error', error);
 }
 
-async function api(action, values = {}) {
-  const {data, error} = await client.auth.getSession();
-  if (error || !data.session) throw new Error('请先使用 GitHub 账号登录。');
+export async function api(action, values = {}, {anonymous = false} = {}) {
+  const {data, error} = client ? await client.auth.getSession() : {data: {session: null}, error: null};
+  if (error || (!data.session && !anonymous)) throw new Error('请先使用 GitHub 账号登录。');
+  const headers = {'Content-Type': 'application/json'};
+  if (data.session) headers.Authorization = `Bearer ${data.session.access_token}`;
   const response = await fetch(authEndpoint, {
-    method: 'POST', headers: {'Content-Type': 'application/json', Authorization: `Bearer ${data.session.access_token}`},
+    method: 'POST', headers, cache: 'no-store',
     body: JSON.stringify({action, ...values}), signal: AbortSignal.timeout(25000),
   });
   const result = await response.json();
@@ -35,7 +46,8 @@ async function api(action, values = {}) {
   return result;
 }
 
-function signedOut() {
+function signedOut(ready = true) {
+  requestsSequence++;
   status = null;
   loginButton.hidden = false;
   logoutButton.hidden = true;
@@ -44,10 +56,11 @@ function signedOut() {
   adminLink.hidden = true;
   avatar.hidden = true;
   greeting.textContent = '欢迎来到我的 Blog';
-  accountNote.textContent = '公开文章无需登录；Friend 可以阅读全部 Daily。';
+  accountNote.textContent = '公开笔记无需登录；Friend 可以阅读“需要权限”的笔记。';
   if (adminList) adminList.replaceChildren();
   if (checkEmailButton) checkEmailButton.hidden = true;
   if (adminNote) adminNote.textContent = '请先登录管理员账号。';
+  announceAuth({ready, user_id: null, is_admin: false, is_friend: false});
 }
 
 function renderStatus(value) {
@@ -64,6 +77,7 @@ function renderStatus(value) {
   friendButton.disabled = value.request_sent;
   adminLink.hidden = !value.is_admin;
   if (checkEmailButton) checkEmailButton.hidden = !value.is_admin;
+  announceAuth({ready: true, user_id: session?.user.id || null, is_admin: value.is_admin, is_friend: value.is_friend});
 }
 
 async function refresh() {
@@ -75,10 +89,16 @@ async function refresh() {
     session = data.session;
     if (!session) { signedOut(); return; }
     // Do not infer Friend/admin status from localStorage, UI state, or JWT metadata.
-    renderStatus(await api('status'));
+    const userId = session.user.id;
+    const value = await api('status');
+    const current = await client.auth.getSession();
+    if (current.error || current.data.session?.user.id !== userId) { signedOut(); return; }
+    session = current.data.session;
+    renderStatus(value);
     if (adminList) {
-      if (status.is_admin) await loadRequests();
-      else { adminList.replaceChildren(); adminNote.textContent = '此页面仅供管理员使用。'; }
+      if (status.is_admin) {
+        if (!document.getElementById('blog-friends-panel')?.hidden) await loadRequests();
+      } else { adminList.replaceChildren(); adminNote.textContent = '此页面仅供管理员使用。'; }
     }
   } catch (error) {
     // Clear stale privileged UI after errors or revocation.
@@ -105,7 +125,10 @@ async function review(request, decision, button) {
 }
 
 async function loadRequests() {
+  const sequence = ++requestsSequence;
+  const user = authContext.user_id;
   const {requests} = await api('list');
+  if (sequence !== requestsSequence || !authContext.is_admin || authContext.user_id !== user) return;
   const fragment = document.createDocumentFragment();
   for (const request of requests) {
     const card = document.createElement('article');
@@ -160,6 +183,7 @@ loginButton.addEventListener('click', async () => {
 });
 
 logoutButton.addEventListener('click', async () => {
+  if (!window.dispatchEvent(new CustomEvent('blog-before-logout', {cancelable: true}))) return;
   logoutButton.disabled = true;
   try {
     const {error} = await client.auth.signOut({scope: 'local'});
@@ -191,7 +215,7 @@ checkEmailButton?.addEventListener('click', async () => {
 });
 
 async function initialize() {
-  signedOut();
+  signedOut(false);
   if (!authEndpoint) { notify('GitHub 登录正在配置中，公开文章可直接阅读。'); return; }
   loginButton.disabled = true;
   try {
@@ -221,5 +245,9 @@ async function initialize() {
   } catch (error) { notify(error.message || '登录服务暂时不可用，请稍后重试。', true); }
   finally { loginButton.disabled = false; }
 }
+
+window.addEventListener('blog-show-friends', () => {
+  if (status?.is_admin && adminList) loadRequests().catch(error => notify(error.message, true));
+});
 
 initialize();
