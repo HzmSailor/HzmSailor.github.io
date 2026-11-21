@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>如何整理一篇机器人学习论文 | Zimu Han's Blog</title>
+  <meta name="description" content="Academic 示例文章：从研究问题、方法假设到实验验证的阅读笔记框架。" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <link rel="stylesheet" href="../../blog.css" />
+</head>
+<body class="blog-page">
+<div class="container">
+  <header class="blog-header">
+    <a class="blog-author" href="../../../">Zimu Han</a>
+    <a class="blog-home" href="../../../">Homepage</a>
+  </header>
+
+  <main id="main-content">
+    <nav class="blog-nav" aria-label="Blog navigation">
+      <a href="../../">Overview</a>
+      <a href="../">Academic</a>
+      <a href="../../daily/">Daily</a>
+    </nav>
+
+    <article>
+      <header class="blog-article-header">
+        <div class="blog-post-meta"><span>Academic</span><span>Example · Public</span><time datetime="2026-11-21">Nov 21, 2026</time></div>
+        <h1>如何整理一篇机器人学习论文</h1>
+        <p class="blog-example-note">这是一篇用于展示 Blog 排版的示例文章，可在正式发布内容后替换。</p>
+      </header>
+
+      <div class="blog-prose">
+        <p>读完一篇论文后，最有用的笔记往往不是对每一节的复述，而是能够回答几个问题：它想解决什么，为什么这样做，以及证据支持到了哪里。</p>
+
+        <h2>先写下研究问题</h2>
+        <p>试着在不使用方法名称的情况下，用两三句话描述问题。现有方案在哪种条件下遇到困难？作者希望改变的是数据需求、执行效果、训练成本，还是适用范围？如果问题还说不清楚，可以先回到引言和任务设定。</p>
+
+        <h2>把方法拆成输入、过程和输出</h2>
+        <p>在机器人学习的阅读笔记里，可以先画一条简单的数据流，再补充各部分的假设：</p>
+        <ul>
+          <li><strong>输入：</strong>模型能看到哪些观测、历史信息和任务描述？</li>
+          <li><strong>过程：</strong>哪些部分经过学习，哪些部分由规则或已有模块提供？</li>
+          <li><strong>输出：</strong>预测结果如何变成机器人实际执行的动作？</li>
+        </ul>
+        <p>这张草图不必精致。它的作用是帮助读者看清信息在哪里进入系统，哪些条件在实验之外可能发生变化。</p>
+
+        <h2>让结论和实验一一对应</h2>
+        <p>为每一条主要结论找出直接支持它的实验，同时记下实验条件。比较方法是否使用了相同的数据？任务、训练预算和评价指标是否一致？哪些现象有消融支持，哪些仍然只是合理解释？</p>
+        <blockquote><p>把“作者报告了什么”和“我据此推测什么”分开写。</p></blockquote>
+
+        <h2>以一个可以验证的问题结尾</h2>
+        <p>最后留下一个具体问题，比留下“很有启发”更方便继续研究。例如：如果减少某一类观测，方法是否仍然成立？先写清楚要改变的条件和要观察的指标，下一次阅读或实验就有了起点。</p>
+      </div>
+    </article>
+
+    <nav class="blog-article-footer" aria-label="More posts">
+      <a href="../">All Academic posts</a>
+      <a href="../../daily/ordinary-days-example/">Daily example</a>
+    </nav>
+  </main>
+
+  <footer class="site-footer"><p>© Zimu Han</p></footer>
+</div>
+</body>
+</html>
