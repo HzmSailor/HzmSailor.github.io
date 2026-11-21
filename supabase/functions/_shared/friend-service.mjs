@@ -74,7 +74,11 @@ export function createFriendHandler({authenticate, store, sendEmail, verifyEmail
       if (input.action === 'list') return json({requests: await store.listRequests()});
       if (input.action === 'check_email') {
         try { await verifyEmail(); return json({email_ready: true}); }
-        catch { throw new HttpError(503, '通知邮件连接失败，请检查 Gmail 应用专用密码是否已保存。'); }
+        catch (error) {
+          const code = String(error?.code || error?.name || 'UNKNOWN');
+          console.error('SMTP verification failed:', code, String(error?.message || '').slice(0, 250));
+          throw new HttpError(503, `通知邮件连接失败（${code}），请稍后重试或检查 Gmail 应用专用密码。`);
+        }
       }
       if (!/^[0-9a-f-]{36}$/i.test(input.request_id || '')) throw new HttpError(400, '申请编号不正确。');
       if (input.action === 'review') {
